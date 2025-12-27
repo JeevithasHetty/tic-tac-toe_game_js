@@ -11,15 +11,21 @@ permissions:
 
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Upload static site
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: .
+          path: .  # folder containing your index.html, CSS, JS
 
       - name: Deploy GitHub Pages
-        uses: actions/deploy-pages@v2
+        id: deploy
+        uses: actions/deploy-pages@v4
+
